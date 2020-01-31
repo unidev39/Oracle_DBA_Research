@@ -36,7 +36,7 @@ MAX(SEQUENCE#) THREAD#
 */
 
 -- Step 2.2
--- Secondary Database -> DR Servers (Recived Archive Count)
+-- Secondary Database -> DR Servers (Received Archive Count)
 SQL> SELECT MAX(sequence#), thread# FROM gv$archived_log GROUP BY thread#;
 /*
 MAX(SEQUENCE#) THREAD#
@@ -431,7 +431,7 @@ USER is "SYS"
 */
 
 -- Step 5.9
--- Secondary Database -> DR Servers (Genrate Archive Count)
+-- Secondary Database -> DR Servers (Generate Archive Count)
 -- This ste
 SQL> SELECT MAX(sequence#), thread# FROM gv$archived_log GROUP BY thread#;
 /*
@@ -594,7 +594,7 @@ MAX(SEQUENCE#) THREAD#
 
 -- Step 8.2
 -- 
--- Secondary Database -> DR Servers (Recived Archive Count)
+-- Secondary Database -> DR Servers (Received Archive Count)
 SQL> SELECT MAX(sequence#), thread# FROM gv$archived_log GROUP BY thread#;
 /*
 MAX(SEQUENCE#) THREAD#
@@ -626,7 +626,7 @@ USER is "SNAPSHOTAPPLICATION"
 */
 
 -- Step 9.2
--- Verfiy the Data from DR Site
+-- Verify the Data from DR Site
 SQL> SELECT c1 FROM snapshotapplication.test;
 /*
 C1
