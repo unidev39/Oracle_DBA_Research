@@ -1,5 +1,17 @@
 1. Create Disk in SAN Storage and mapping in appropriate location
-2. Reboot the relevent server 
+2. Reboot the relevent server
+   OR
+   Use below commads to reflect partition without rebooting server:
+   
+   cat /proc/scsi/scsi | egrep –I ‘Host:’ | wc -l
+   /*
+   30
+   */
+   /usr/bin/rescan-scsi-bus.sh
+   cat /proc/scsi/scsi | egrep –I ‘Host:’ | wc -l
+   /*
+   34
+   */
 3.[root@rac1 ~]# multipath -ll
 /*
 mpathg (360080e50003e06c4000013665ddf25f3) dm-5 IBM,1746 FAStT
@@ -108,6 +120,23 @@ SELECT path,header_status,state FROM v$asm_disk;
 
 -- Now, we can add the disk to the ASM diskgroup:
 ALTER DISKGROUP DATA2 ADD DISK '/dev/oracleasm/disks/DATA_PRD2_1';
+--Or--
+/*
+set lines 200;
+col path format a40;
+select name,path, group_number group_#, disk_number disk_#, mount_status,header_status, state, total_mb, free_mb from v$asm_disk order by group_number;
+
+NAME                           PATH                                        GROUP_#     DISK_# MOUNT_S HEADER_STATU STATE      TOTAL_MB    FREE_MB
+------------------------------ ---------------------------------------- ---------- ---------- ------- ------------ -------- ---------- ----------
+                               ORCL:DATA_PRD2_1                                  0          0 CLOSED  PROVISIONED  NORMAL            0          0
+ARC                            ORCL:ARC1                                         1          0 CACHED  MEMBER       NORMAL       204796     189930
+DATA2                          ORCL:DATA2                                        2          0 CACHED  MEMBER       NORMAL       819197     148294
+DATA1                          ORCL:DATA1                                        3          0 CACHED  MEMBER       NORMAL      1535992         60
+FRA                            ORCL:FRA1                                         4          0 CACHED  MEMBER       NORMAL      1023992     538688
+OCR                            ORCL:OCR1                                         5          0 CACHED  MEMBER       NORMAL        10236       9873
+
+ALTER DISKGROUP DATA2 ADD DISK 'ORCL:DATA_PRD2_1' NAME DATA_PRD2_1;
+*/
 
 -- Next, we identify the disks to see which disk should be added to the diskgroup
 col name for a60
