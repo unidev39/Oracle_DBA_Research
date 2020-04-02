@@ -14,7 +14,7 @@
 ###########################BOF of the rman_db_full_backup_asm################################
 
 # Export the oracle environment
-export ORACLE_HOME=/u01/app/oracle/product/11.2.0.3.0/db_1
+export ORACLE_HOME=/opt/app/oracle/product/11.2.0.3.0/db_1
 export ORACLE_SID=racdb1
 export PATH=$PATH:$ORACLE_HOME/bin
 
