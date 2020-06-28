@@ -43,6 +43,14 @@ ENABLED +DATA/racdb/bct/rman_change_track.f
 SQL> exit;
 */
 
+[oracle@racdb1 ~]$ srvctl stop database -d racdb
+[oracle@racdb1 ~]$ srvctl start database -d racdb
+[oracle@racdb1 ~]$ srvctl status database -d racdb
+/*
+Instance racdb1 is not running on node rac1
+Instance racdb2 is not running on node rac2
+*/
+
 /*
 -- To Disable Block Change Tracking:
 ALTER DATABASE DISABLE BLOCK CHANGE TRACKING;
