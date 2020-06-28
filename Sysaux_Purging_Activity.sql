@@ -40,7 +40,7 @@ SQL> exit
 --awrinfo.sql
 [oracle@racdbnode2 admin]$ pwd
 --/opt/app/oracle/product/11.2.0.3/db_1/rdbms/admin
-[oracle@racdbnode1 admin]$ sqlplus / as sysdba
+[oracle@racdbnode2 admin]$ sqlplus / as sysdba
 /*
 SQL*Plus: Release 11.2.0.3.0 Production on Fri May 1 20:35:35 2020
 
@@ -335,7 +335,7 @@ SQL> exit
 --awrinfo.sql
 [oracle@racdbnode2 admin]$ pwd
 --/opt/app/oracle/product/11.2.0.3/db_1/rdbms/admin
-[oracle@racdbnode1 admin]$ sqlplus / as sysdba
+[oracle@racdbnode2 admin]$ sqlplus / as sysdba
 /*
 SQL*Plus: Release 11.2.0.3.0 Production on Fri May 1 20:35:35 2020
 
