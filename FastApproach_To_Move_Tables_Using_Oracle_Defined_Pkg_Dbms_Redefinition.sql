@@ -130,4 +130,4 @@ SELECT 'DESTCEUSER.ORIGNAL_TABLE' table_name, Count(*) row_count FROM DESTCEUSER
 TABLE_NAME               ROW_COUNT
 ------------------------ ---------
 DESTCEUSER.ORIGNAL_TABLE     10000
-*/
+*/  
