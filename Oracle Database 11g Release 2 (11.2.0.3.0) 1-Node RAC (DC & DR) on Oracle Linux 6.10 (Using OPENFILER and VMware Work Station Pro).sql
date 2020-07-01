@@ -430,11 +430,11 @@ Resolving public-yum.oracle.com... 104.84.157.171
 Connecting to public-yum.oracle.com|104.84.157.171|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 12045 (12K) [text/plain]
-Saving to: “public-yum-ol6.repo.2”
+Saving to: Â“public-yum-ol6.repo.2Â”
 
 100%[======================================>] 12,045      --.-K/s   in 0s      
 
-2019-09-02 13:50:55 (95.3 MB/s) - “public-yum-ol6.repo” saved [12045/12045]
+2019-09-02 13:50:55 (95.3 MB/s) - Â“public-yum-ol6.repoÂ” saved [12045/12045]
 */
 [root@rac_pdb/rac_sdb yum.repos.d]# ls
 /*
@@ -515,7 +515,7 @@ net.ipv4.ip_local_port_range = 9000 65500
 [root@rac_pdb/rac_sdb ~]# /sbin/sysctl -p
 
 -- Step 24 -->> On both Primary (DC) and Standby (DR) Database Servers
--- Edit “/etc/security/limits.conf” file to limit user processes
+-- Edit Â“/etc/security/limits.confÂ” file to limit user processes
 [root@rac_pdb/rac_sdb ~]# vim /etc/security/limits.conf
 /*
 oracle   soft   nofile  65536
