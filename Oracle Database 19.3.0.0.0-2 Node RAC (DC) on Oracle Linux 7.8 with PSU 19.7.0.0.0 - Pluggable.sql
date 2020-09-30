@@ -305,11 +305,11 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 [root@rac1 Packages]# nslookup 192.168.1.75
 /*
-75.1.16.172.in-addr.arpa        name = rac1.mydomain.
+75.1.168.192.in-addr.arpa        name = rac1.mydomain.
 */
 [root@rac1 Packages]# nslookup 192.168.1.76
 /*
-76.1.16.172.in-addr.arpa        name = rac2.mydomain.
+76.1.168.192.in-addr.arpa        name = rac2.mydomain.
 */
 
 -- Step 19 -->> On Both Node
@@ -518,11 +518,11 @@ Hint: Some lines were ellipsized, use -l to show in full.
 -- Step 30 -->> On Both Node
 [root@rac1 Packages]# nslookup 192.168.1.75
 /*
-75.1.16.172.in-addr.arpa        name = rac1.mydomain.
+75.1.168.192.in-addr.arpa        name = rac1.mydomain.
 */
 [root@rac1 Packages]# nslookup 192.168.1.76
 /*
-76.1.16.172.in-addr.arpa        name = rac2.mydomain.
+76.1.168.192.in-addr.arpa        name = rac2.mydomain.
 */
 
 [root@rac1/rac2 ~]# nslookup rac1
@@ -710,7 +710,7 @@ net.ipv4.ip_local_port_range = 9000 65500
 [root@rac1/rac2 ~]# sysctl -p /etc/sysctl.conf
 
 -- Step 38 -->> On Both Node
--- Edit “/etc/security/limits.d/oracle-database-preinstall-19c.conf” file to limit user processes
+-- Edit Â“/etc/security/limits.d/oracle-database-preinstall-19c.confÂ” file to limit user processes
 [root@rac1/rac2 ~]# vi /etc/security/limits.d/oracle-database-preinstall-19c.conf
 /*
 oracle   soft   nofile  1024
