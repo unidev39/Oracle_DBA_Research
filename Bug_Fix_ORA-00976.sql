@@ -265,7 +265,7 @@ OPatch succeeded.
 */
 
 Step 9:
-[oracle@PDB-RAC2 14230270]$ /opt/app/oracle/product/11.2.0.3/db_1/OPatch/opatch lsinventory
+[oracle@PDB-RAC2 ~]$ /opt/app/oracle/product/11.2.0.3/db_1/OPatch/opatch lsinventory
 /*
 Invoking OPatch 11.2.0.1.7
 
