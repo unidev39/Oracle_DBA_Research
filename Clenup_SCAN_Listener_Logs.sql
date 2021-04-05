@@ -110,7 +110,7 @@ The command completed successfully
 */
 
 [grid@rac1 trace]$ gzip listener_scan2.log
-[grid@rac1 trace]$ touch listener_scan2.log
+[grid@rac1 trace]$ touch listener_scan2.log && chmod -R 640 listener_scan2.log
 [grid@rac1 trace]$ ls -ltr
 /*
 -rw-r----- 1 grid oinstall 982873 Nov 10 11:29 listener_scan2.log.gz
