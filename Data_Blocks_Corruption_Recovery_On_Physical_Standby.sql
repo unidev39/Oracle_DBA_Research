@@ -34,17 +34,17 @@ RMAN> VALIDATE DATAFILE 16;
 Starting validate at 23-JUL-21
 using target database control file instead of recovery catalog
 allocated channel: ORA_DISK_1
-channel ORA_DISK_1: SID=399 instance=nplprod1 device type=DISK
+channel ORA_DISK_1: SID=399 instance=racdb1 device type=DISK
 channel ORA_DISK_1: starting validation of datafile
 channel ORA_DISK_1: specifying datafile(s) for validation
-input datafile file number=00018 name=+DATA/dr/datafile/tbs_silverbladebi.347.996020817
+input datafile file number=00016 name=+DATA/dr/datafile/tbs_racdb.347.996020817
 channel ORA_DISK_1: validation complete, elapsed time: 00:02:10
 List of Datafiles
 =================
 File Status Marked Corrupt Empty Blocks Blocks Examined High SCN
 ---- ------ -------------- ------------ --------------- ----------
 16   OK     4253           64483        4194309         50132299474
-  File Name: +DATA/dr/datafile/tbs_silverbladebi.347.996020817
+  File Name: +DATA/dr/datafile/tbs_racdb.347.996020817
   Block Type Blocks Failing Blocks Processed
   ---------- -------------- ----------------
   Data       0              2556994
