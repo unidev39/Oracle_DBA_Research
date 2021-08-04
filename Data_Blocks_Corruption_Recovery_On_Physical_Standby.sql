@@ -181,3 +181,4 @@ SQL> SELECT * FROM v$database_block_corruption;
 8. Start MRP on the physical standby database.
 
 SQL> ALTER DATABASE RECOVER MANAGED STANDBY DATABASE USING CURRENT LOGFILE DISCONNECT;
+
