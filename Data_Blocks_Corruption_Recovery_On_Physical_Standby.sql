@@ -129,11 +129,27 @@ FILE# BLOCK#  BLOCKS CORRUPTION_CHANGE# CORRUPTION_TYPE
 -- Resolution 
 1. On the primary database, take backup of all the datafiles which reside on +FRA/dump/ mountpoint.
 
+SQL> SELECT a.inst_id,b.status,b.instance_name,a.database_role,a.open_mode FROM gv$database a,v$instance b;
+/*
+INST_ID STATUS  INSTANCE_NAME DATABASE_ROLE    OPEN_MODE
+------- ------- ------------- ---------------- ---------
+      1 OPEN    racdb1        PRIMARY          READ WRITE
+      2 OPEN    racdb1        PRIMARY          READ WRITE
+*/
+
 RMAN> backup datafile 16 format '+FRA/dump/datafile_16.bkp';
 
 2. Transfer the backup pieces to the standby database
 
 3. On the physical standby database, catalog the backuppieces.
+SQL> SELECT a.inst_id,b.status,b.instance_name,a.database_role,a.open_mode FROM gv$database a,v$instance b;
+/*
+INST_ID STATUS  INSTANCE_NAME DATABASE_ROLE    OPEN_MODE
+------- ------- ------------- ---------------- ---------
+      1 MOUNTED racdb1        PHYSICAL STANDBY MOUNTED  
+      2 MOUNTED racdb2        PHYSICAL STANDBY MOUNTED  
+*/
+
 RMAN> catalog backuppiece '+FRA/dump/datafile_16.bkp';
 RMAN> list backuppiece '+FRA/dump/datafile_16.bkp';
 RMAN> list backup of datafile 16;
@@ -160,7 +176,8 @@ RMAN> VALIDATE DATAFILE 16;
 
 7. Verify the corrupted Blocks
 SQL> SELECT * FROM v$database_block_corruption;
- 
+-- No Row Returned
+
 8. Start MRP on the physical standby database.
 
 SQL> ALTER DATABASE RECOVER MANAGED STANDBY DATABASE USING CURRENT LOGFILE DISCONNECT;
