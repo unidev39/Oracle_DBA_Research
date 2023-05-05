@@ -171,6 +171,15 @@ RMAN> run
   release channel c4;
 }
 
+--OR--
+
+run
+{
+catalog start with '+ARCP/DR/arcgap/datafile' noprompt;
+restore datafile 16;
+validate datafile 16;
+}
+
 6. Cross Validate the Datafile
 RMAN> VALIDATE DATAFILE 16;
 
