@@ -11,14 +11,16 @@ GROUP BY tablespace_name,tablespace_size,allocated_space,free_space;
 --Step 2: (To Check the Temp Tablespace DataFile file_name,status,autoextensible and script)
 SELECT 'ALTER TABLESPACE TEMP01 SHRINK TEMPFILE '''||FILE_NAME||''' KEEP 512M; ',file_name,status,autoextensible FROM dba_temp_files a;
 
---Step 3: (Run the Script for Specific temfile name)
+--Step 3: (Shrink TEMPFILE using alter tablespace command)
 ALTER TABLESPACE TEMP01 SHRINK TEMPFILE '+DATA/database/tempfile/temp01.567.1234567891' KEEP 512M;
 ALTER TABLESPACE TEMP01 SHRINK TEMPFILE '+DATA/database/tempfile/temp01.568.1234567891' KEEP 512M;
 ALTER TABLESPACE TEMP01 SHRINK TEMPFILE '+DATA/database/tempfile/temp01.569.1234567891' KEEP 512M;
 ALTER TABLESPACE TEMP01 SHRINK TEMPFILE '+DATA/database/tempfile/temp01.579.1234567891' KEEP 512M;
 
 --OR--
---Step 4: (Run the Script for Temp Tablespace DataFile)
+--Step 4: (Shrink TEMP Tablespace using alter tablespace command)
 ALTER TABLESPACE TEMP01 SHRINK SPACE KEEP 512M;
+
+--Step 5: (Shrink TEMP Tablespace to the smallest possible size)
 ALTER TABLESPACE TEMP01 SHRINK SPACE;
 
