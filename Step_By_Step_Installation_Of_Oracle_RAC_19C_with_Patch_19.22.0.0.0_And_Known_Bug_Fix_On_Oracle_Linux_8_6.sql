@@ -7,7 +7,6 @@
 --https <= public-yum.oracle.com/repo/OracleLinux/OL8/baseos/latest/x86_64/
 --UEKR6 <= https <= public-yum.oracle.com/repo/OracleLinux/OL8/UEKR6/x86_64/
 --appstream <= https <= public-yum.oracle.com/repo/OracleLinux/OL8/appstream/x86_64/
---Then for other RPM V1020898-01.iso
 
 -- Step 0.0 -->>  2 Node rac on VM -->> On both Node
 [root@pdb1/pdb2 ~]# df -Th
