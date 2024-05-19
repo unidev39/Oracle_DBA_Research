@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
 -------------Two Node rac Setup on VM Workstation---------------
 ----------------------------------------------------------------
--- Step 0 -->> 2 Node rac on VM -->> On both Node
+-- Step 0 -->> 2 Node RAC on VM -->> On both Node
 --For OS Oracle Linux 8.6 => boot V1020894-01.iso
 --And follow 
 --https <= public-yum.oracle.com/repo/OracleLinux/OL8/baseos/latest/x86_64/
