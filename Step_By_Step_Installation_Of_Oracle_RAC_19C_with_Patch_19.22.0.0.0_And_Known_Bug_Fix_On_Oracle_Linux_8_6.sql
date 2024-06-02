@@ -4269,7 +4269,7 @@ AS
 SELECT LEVEL c1, SYSDATE c2 FROM dual CONNECT BY LEVEL <=1000;
 
 -- Step 159.1 -->> On SOURCEPDB Server (Heap/Partitions tables import using Network Link)
-SQL> CREATE TABLE BACKUP.tbl_TBL_BIG_ALBUM_SALES_PT_pt
+SQL> CREATE TABLE BACKUP.tbl_BIG_ALBUM_SALES_PT_pt
 (
  id           NUMBER,
  album_id     NUMBER,
@@ -4291,7 +4291,7 @@ PARTITION BY RANGE (release_date)
 
 -- Step 159.2 -->> On SOURCEPDB Server (Heap/Partitions tables import using Network Link)
 -- Next populate the table with approximately 8 years worth of data
-SQL> INSERT INTO BACKUP.tbl_TBL_BIG_ALBUM_SALES_PT_pt
+SQL> INSERT INTO BACKUP.tbl_BIG_ALBUM_SALES_PT_pt
 SELECT
      ROWNUM                             id,
      MOD(ROWNUM,5000)+1                 album_id,
@@ -4310,7 +4310,6 @@ LOGFILE=SRC_BACKUP.log DIRECTORY=DUMP_DIR \
 NETWORK_LINK=SRC_BACKUP_PROD PARALLEL=4 \
 include=table:\"IN \(\'TBL_IMPORT_HEAP\' \)\" \
 REMAP_SCHEMA=BACKUP:BACKUP REMAP_TABLESPACE=TBS_BACKUP:TBS_BACKUP;
-"
 /*
 Import: Release 19.0.0.0.0 - Production on Sun Jun 2 15:14:48 2024
 Version 19.22.0.0.0
@@ -4331,9 +4330,8 @@ Job "BACKUP"."SYS_IMPORT_SCHEMA_01" successfully completed at Sun Jun 2 15:15:11
 [oracle@pdb1 ~]$ impdp BACKUP/B8\#cKu\#P@invpdb schemas=BACKUP \
 LOGFILE=SRC_BACKUP_P.log DIRECTORY=DUMP_DIR \
 NETWORK_LINK=SRC_BACKUP_PROD PARALLEL=4 \
-include=table:\"IN \(\'TBL_TBL_BIG_ALBUM_SALES_PT_PT\' \)\" \
+include=table:\"IN \(\'TBL_BIG_ALBUM_SALES_PT_PT\' \)\" \
 REMAP_SCHEMA=BACKUP:BACKUP REMAP_TABLESPACE=TBS_BACKUP:TBS_BACKUP;
-"
 /*
 Import: Release 19.0.0.0.0 - Production on Sun Jun 2 15:15:17 2024
 Version 19.22.0.0.0
