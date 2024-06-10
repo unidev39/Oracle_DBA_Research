@@ -3252,6 +3252,7 @@ pwdpdbdb.256.1168866859                             100% 2048     1.4MB/s   00:0
 
 */
 
+-- Step 135.1 -->> On Node 1 - DC
 [oracle@pdb1 ~]$ sqlplus / as sysdba
 /*
 SQL*Plus: Release 19.0.0.0.0 - Production on Wed May 29 11:25:23 2024
@@ -4468,6 +4469,7 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 156.8 -->> On Node 1 - DR
 [oracle@pdb1 ~]$ tnsping dr
 /*
 TNS Ping Utility for Linux: Version 19.0.0.0.0 - Production on 29-MAY-2024 13:54:48
@@ -4483,6 +4485,7 @@ Attempting to contact (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = pdbdr1.u
 OK (0 msec)
 */
 
+-- Step 156.9 -->> On Node 1 - DR
 [oracle@pdb1 ~]$ tnsping pdbdb
 /*
 TNS Ping Utility for Linux: Version 19.0.0.0.0 - Production on 29-MAY-2024 13:54:54
@@ -5725,6 +5728,7 @@ DR =
   )
 */
 
+-- Step 172.3 -->> On Node 1 - DR
 [oracle@pdbdr1 admin]$ tnsping dr
 /*
 TNS Ping Utility for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 10:20:13
@@ -5773,6 +5777,7 @@ DR =
   )
 */
 
+-- Step 173.3 -->> On Node 1 - DR
 [oracle@pdbdr2 admin]$ tnsping dr
 /*
 TNS Ping Utility for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 10:20:19
@@ -5839,6 +5844,7 @@ DR =
   )
 */
 
+-- Step 174.3 -->> On Node 1 - DC
 [oracle@pdb1 admin]$ tnsping dr
 /*
 TNS Ping Utility for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 10:23:27
@@ -6275,7 +6281,7 @@ grid      146150  146066  0 10:39 pts/0    00:00:00 grep --color=auto SCAN
 */
 
 -- Step 179.4 -->> On Node 2 - DC
-[grid@invoice2 ~]$ lsnrctl status LISTENER_SCAN1
+[grid@pdb2 ~]$ lsnrctl status LISTENER_SCAN1
 /*
 LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 10:39:48
 
@@ -6315,6 +6321,7 @@ Service "pdbdbXDB" has 2 instance(s).
 The command completed successfully
 */
 
+-- Step 179.5 -->> On Node 2 - DC
 [grid@pdb2 ~]$ lsnrctl status
 /*
 LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 10:40:14
@@ -6468,6 +6475,7 @@ Service "dr" has 2 instance(s).
 The command completed successfully
 */
 
+-- Step 180.5 -->> On Node 2 - DR
 [grid@pdbdr2 ~]$ lsnrctl status
 /*
 LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 10:45:32
@@ -6623,10 +6631,11 @@ INVPDB =
   )
 */
 
+-- Step 184 -->> On Node 1 - DR
 [oracle@pdbdr1 ~]$ mkdir -p /home/oracle/script
 [oracle@pdbdr1 ~]$ chmod -R 775 /home/oracle/script
 
--- Step 184 -->> On Node 1 - DR
+-- Step 184.1 -->> On Node 1 - DR
 [oracle@pdbdr1 ~]$ vi /home/oracle/script/dr_archivedelete.sh
 /*
 
@@ -6651,8 +6660,10 @@ done
 
 */
 
+-- Step 184.2 -->> On Node 1 - DR
 [oracle@pdbdr1 ~]$ /home/oracle/script/dr_archivedelete.sh
 
+-- Step 185 -->> On Node 1 - DR
 [root@pdbdr1 ~]# vi /etc/oratab
 /*
 +ASM1:/opt/app/19c/grid:N
@@ -6660,6 +6671,7 @@ pdbdb:/opt/app/oracle/product/19c/db_1:N
 pdbdb1:/opt/app/oracle/product/19c/db_1:N
 */
 
+-- Step 186 -->> On Node 2 - DR
 [root@pdbdr2 ~]# vi /etc/oratab
 /*
 +ASM2:/opt/app/19c/grid:N
@@ -6667,7 +6679,7 @@ pdbdb:/opt/app/oracle/product/19c/db_1:N
 pdbdb1:/opt/app/oracle/product/19c/db_1:N
 */
 
--- Step 137 -->> On Both Node (If Required)
+-- Step 187 -->> On Both Node (If Required) - DR
 -- To run the oracle tools (Till 11gR2 - If Required)
 -- To Connect lower version tools
 -- 1. Copy the contains of /etc/hosts
@@ -6683,6 +6695,7 @@ SQLNET.ALLOWED_LOGON_VERSION_SERVER=8
 SQLNET.ALLOWED_LOGON_VERSION_CLIENT=8
 */
 
+-- Step 187.1 -->> On Both Nodes - DR
 [root@pdbdr1/pdbdr2 ~]# vi /opt/app/oracle/product/19c/db_1/network/admin/sqlnet.ora
 /*
 # sqlnet.ora.pdbdr1/sqlnet.ora.pdbdr2 Network Configuration File: /opt/app/oracle/product/19c/db_1/network/admin/sqlnet.ora
@@ -6694,10 +6707,16 @@ SQLNET.ALLOWED_LOGON_VERSION_SERVER=8
 SQLNET.ALLOWED_LOGON_VERSION_CLIENT=8
 */
 
-[oracle@pdbdr1/pdbdr2 ~]$ srvctl stop listener
-[oracle@pdbdr1/pdbdr2 ~]$ srvctl start listener
-[oracle@pdbdr1/pdbdr2 ~]$ srvctl status listener
+-- Step 187.2 -->> On Node 1 - DR
+[oracle@pdbdr1 ~]$ srvctl stop listener
+[oracle@pdbdr1 ~]$ srvctl start listener
 
+-- Step 187.3 -->> On Both Nodes - DR
+[oracle@pdbdr1/pdbdr2 ~]$ srvctl status listener
+/*
+Listener LISTENER is enabled
+Listener LISTENER is running on node(s): pdbdr2,pdbdr1
+*/
 
 -- To Fix the ADRCI log if occured in remote nodes
 -- Step Fix.1 -->> On Node 2
@@ -6738,6 +6757,7 @@ ADR base = "/opt/app/oracle"
 adrci> exit
 */
 
+-- Step 188 -->> On Node 1 - DR
 [oracle@pdbdr1 ~]$ sqlplus / as sysdba
 /*
 SQL*Plus: Release 19.0.0.0.0 - Production on Fri May 31 11:31:42 2024
@@ -6772,9 +6792,16 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 189 -->> On Node 1 - DR
 [root@pdbdr1 ~]# cd /opt/app/19c/grid/bin/
+
+-- Step 189.1 -->> On Node 1 - DR
 [root@pdbdr1 bin]# ./crsctl stop cluster -all
+
+-- Step 189.2 -->> On Node 1 - DR
 [root@pdbdr1 bin]# ./crsctl start cluster -all
+
+-- Step 189.3 -->> On Node 1 - DR
 [root@pdbdr1 bin]# ./crsctl stat res -t -init
 /*
 --------------------------------------------------------------------------------
@@ -6811,7 +6838,10 @@ ora.storage
 --------------------------------------------------------------------------------
 */
 
+-- Step 189.4 -->> On Node 2 - DR
 [root@pdbdr2 ~]# cd /opt/app/19c/grid/bin/
+
+-- Step 189.5 -->> On Node 2 - DR
 [root@pdbdr2 bin]# ./crsctl stat res -t -init
 /*
 --------------------------------------------------------------------------------
@@ -6848,6 +6878,7 @@ ora.storage
 --------------------------------------------------------------------------------
 */
 
+-- Step 190 -->> On Both Nodes - DR
 [root@pdbdr1/pdbdr2 bin]# ./crsctl stat res -t
 /*
 --------------------------------------------------------------------------------
@@ -6910,6 +6941,7 @@ ora.scan2.vip
 --------------------------------------------------------------------------------
 */
 
+-- Step 191 -->> On Node 1 - DR
 [grid@pdbdr1 ~]$ lsnrctl status
 /*
 LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 11:40:51
@@ -6946,12 +6978,14 @@ Service "dr" has 1 instance(s).
 The command completed successfully
 */
 
+-- Step 191.1 -->> On Node 1 - DR
 [grid@pdbdr1 ~]$ ps -ef | grep SCAN
 /*
 grid      880576       1  0 11:36 ?        00:00:00 /opt/app/19c/grid/bin/tnslsnr LISTENER_SCAN1 -no_crs_notify -inherit
 grid      909664  908395  0 11:41 pts/0    00:00:00 grep --color=auto SCAN
 */
 
+-- Step 191.2 -->> On Node 1 - DR
 [grid@pdbdr1 ~]$ lsnrctl status LISTENER_SCAN1
 /*
 LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 11:41:39
@@ -6980,6 +7014,7 @@ Service "dr" has 2 instance(s).
 The command completed successfully
 */
 
+-- Step 192 -->> On Node 2 - DR
 [grid@pdbdr2 ~]$ lsnrctl status
 /*
 LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 11:42:05
@@ -7016,12 +7051,14 @@ Service "dr" has 1 instance(s).
 The command completed successfully
 */
 
+-- Step 192.1 -->> On Node 2 - DR
 [grid@pdbdr2 ~]$ ps -ef | grep SCAN
 /*
 grid      860656       1  0 11:35 ?        00:00:00 /opt/app/19c/grid/bin/tnslsnr LISTENER_SCAN2 -no_crs_notify -inherit
 grid      882489  881861  0 11:42 pts/0    00:00:00 grep --color=auto SCAN
 */
 
+-- Step 192.2 -->> On Node 2 - DR
 [grid@pdbdr2 ~]$ lsnrctl status LISTENER_SCAN2
 /*
 LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 11:42:49
@@ -7050,12 +7087,14 @@ Service "dr" has 2 instance(s).
 The command completed successfully
 */
 
+-- Step 193 -->> On Both Nodes - DR
 [oracle@pdbdr1/pdbdr2 ~]$ srvctl status listener
 /*
 Listener LISTENER is enabled
 Listener LISTENER is running on node(s): pdbdr2,pdbdr1
 */
 
+-- Step 194 -->> On Node 1 - DR
 [oracle@pdbdr1 ~]$ lsnrctl status
 /*
 LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 11:44:07
@@ -7092,6 +7131,7 @@ Service "dr" has 1 instance(s).
 The command completed successfully
 */
 
+-- Step 195 -->> On Node 2 - DR
 [oracle@pdbdr2 ~]$ lsnrctl status
 /*
 LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 31-MAY-2024 11:44:10
@@ -7128,12 +7168,14 @@ Service "dr" has 1 instance(s).
 The command completed successfully
 */
 
+-- Step 196 -->> On Both Nodes - DR
 [oracle@pdbdr1 ~]$ srvctl status database -d pdbdb -v
 /*
 Instance pdbdb1 is running on node pdbdr1. Instance status: Mounted (Closed).
 Instance pdbdb2 is running on node pdbdr2. Instance status: Mounted (Closed).
 */
 
+-- Step 197 -->> On Node 1 - DR
 [oracle@pdbdr1 ~]$ sqlplus / as sysdba
 /*
 SQL*Plus: Release 19.0.0.0.0 - Production on Fri May 31 11:45:31 2024
@@ -7197,7 +7239,8 @@ Version 19.22.0.0.0
 ----------------------------------------------------------------
 --------------Two Nodes DR Drill Senty Testing------------------
 ----------------------------------------------------------------
-Snapshot Standby
+----------------------Snapshot Standby--------------------------
+----------------------------------------------------------------
 Snapshot standby allows the standby database to be opened in read-write mode. 
 When switched back into standby mode, all changes made whilst in read-write mode are lost. 
 This is achieved using flashback database, but the standby database does not need to have flashback database
@@ -7233,9 +7276,12 @@ SQL> show pdbs
          3 INVPDB                         READ WRITE NO
 */
 
+-- Step 1.4
+-- Connect the PDB instance to Create Objects on Primary Database -> DC
 SQL> connect sys/P#ssw0rd@invpdb as sysdba
 Connected.
 
+-- Step 1.4.1
 SQL> CREATE TABLESPACE tbs_backup
      DATAFILE '+DATA'
      SIZE 1g
@@ -7244,6 +7290,7 @@ SQL> CREATE TABLESPACE tbs_backup
 
 Tablespace created.
 
+-- Step 1.4.2
 SQL> CREATE USER backup IDENTIFIED BY "B8#cKu#P" CONTAINER=CURRENT
      DEFAULT TABLESPACE tbs_backup
      TEMPORARY TABLESPACE TEMP
@@ -7251,25 +7298,23 @@ SQL> CREATE USER backup IDENTIFIED BY "B8#cKu#P" CONTAINER=CURRENT
 
 User created.
 
+-- Step 1.4.3
 SQL> GRANT CONNECT,RESOURCE TO backup;
 
 Grant succeeded.
 
-
-
-
-
--- Step 1.4
+-- Step 1.4.4
 -- Connect with any user of Primary Database -> DC
 SQL> conn backup/"B8#cKu#P"@invpdb
 /*
 Connected.
 */
 
+-- Step 1.4.5
 SQL> show user
 USER is "BACKUP"
 
--- Step 1.5
+-- Step 1.4.6
 -- Create a object with relevant user of Primary Database -> DC
 SQL> CREATE TABLE backup.snapshot_standby_test AS
      SELECT
@@ -7280,7 +7325,7 @@ SQL> CREATE TABLE backup.snapshot_standby_test AS
 Table created.
 */
 
--- Step 1.6
+-- Step 1.4.7
 -- Verify the Create a object of Primary Database -> DC
 SQL> SELECT * FROM  backup.snapshot_standby_test;
 /*
@@ -7300,7 +7345,7 @@ SQL> SELECT * FROM  backup.snapshot_standby_test;
 10 rows selected.
 */
 
--- Step 1.6
+-- Step 1.5
 -- Connect with sys user of Primary Database -> DC
 SQL> conn sys/P#ssw0rd@pdbdb as sysdba
 /*
@@ -7316,14 +7361,14 @@ CON_NAME
 CDB$ROOT
 */
 
--- Step 1.6
+-- Step 1.7
 -- Verify the currect archive of Primary Database -> DC
 SQL> alter system switch logfile;
 /*
 System altered.
 */
 
--- Step 1.6
+-- Step 1.8
 -- Verify the currect archive of Primary Database -> DC
 SQL> SELECT MAX(sequence#), thread# FROM gv$archived_log GROUP BY thread#;
 /*
@@ -7418,12 +7463,13 @@ Instance pdbdb1 is not running on node pdbdr1
 Instance pdbdb2 is not running on node pdbdr2
 */
 
+-- Step 3.1
 [oracle@pdbdr1 ~]$ srvctl status database -d pdbdb -v
 /*
 Instance pdbdb1 is not running on node pdbdr1
 Instance pdbdb2 is not running on node pdbdr2
 */
--- Step 3.1
+-- Step 3.2
 -- To start the DB services for node 1 and status Secondary Database -> DR
 [oracle@pdbdr1 ~]$ srvctl start instance -d pdbdb -i pdbdb1 -o mount
 [oracle@pdbdr1 ~]$ srvctl status database -d pdbdb -v
@@ -7432,7 +7478,7 @@ Instance pdbdb1 is running on node pdbdr1. Instance status: Mounted (Closed).
 Instance pdbdb2 is not running on node pdbdr2
 */
 
--- Step 3.2
+-- Step 3.3
 -- Verify the DB instance status of Secondary Database -> DR
 SQL> SELECT inst_id,status,instance_name FROM gv$instance;
 /*
@@ -7441,14 +7487,14 @@ SQL> SELECT inst_id,status,instance_name FROM gv$instance;
          1 MOUNTED      pdbdb1
 */
 
--- Step 3.3
+-- Step 3.4
 --  Covert physical standby database to snapshot standby database -> DR.
 SQL> ALTER DATABASE CONVERT TO SNAPSHOT STANDBY;
 /*
 Database altered.
 */
 
--- Step 3.4
+-- Step 3.5
 -- The physical standby database in snapshot standby database status shoud be in mount mode -> DR
 SQL> SELECT a.inst_id,b.status,b.instance_name,a.database_role,a.open_mode FROM gv$database a,gv$instance b WHERE a.inst_id=b.inst_id;
 /*
@@ -7457,21 +7503,21 @@ SQL> SELECT a.inst_id,b.status,b.instance_name,a.database_role,a.open_mode FROM 
          1 MOUNTED      pdbdb1           SNAPSHOT STANDBY MOUNTED
 */
 
--- Step 3.5
+-- Step 3.6
 -- Bring the database in open mode -> DR
 SQL> ALTER DATABASE OPEN;
 /*
 Database altered.
 */
 
--- Step 3.6
+-- Step 3.7
 -- Bring the database in open mode -> DR
 SQL> alter pluggable database all open;
 /*
 Pluggable database altered.
 */
 
--- Step 3.7
+-- Step 3.8
 -- Bring the database in open mode -> DR
 SQL> show pdbs
 /*
@@ -7481,7 +7527,7 @@ SQL> show pdbs
          3 INVPDB                         READ WRITE NO
 */
 
--- Step 3.8
+-- Step 3.9
 -- Verify the DB instance status of Secondary Database -> DR
 SQL> SELECT inst_id,status,instance_name FROM gv$instance;
 /*
@@ -7491,7 +7537,7 @@ SQL> SELECT inst_id,status,instance_name FROM gv$instance;
 */
 
 
--- Step 3.9
+-- Step 3.10
 -- Verify the restore point of Secondary Database -> DR
 SQL> SELECT inst_id,flashback_on FROM gv$database;
 /*
@@ -7500,21 +7546,21 @@ SQL> SELECT inst_id,flashback_on FROM gv$database;
          1 RESTORE POINT ONLY
 */
 
--- Step 3.10
+-- Step 3.11
 -- Verify the Added Data Files on Primary Database -> DC and properly reflected on Secondary Database -> DR 
 SQL> conn backup/"B8#cKu#P"@invpdb
 /*
 Connected.
 */
 
--- Step 3.11
+-- Step 3.12
 -- Verify the Added Data Files on Primary Database -> DC and properly reflected on Secondary Database -> DR 
 SQL> show user
 /*
 USER is "BACKUP"
 */
 
--- Step 3.12
+-- Step 3.13
 -- Verify the Data populated on Primary Database -> DC and properly reflected on Secondary Database -> DR  
 SQL> select * from backup.snapshot_standby_test;
 /*
@@ -7534,8 +7580,7 @@ SQL> select * from backup.snapshot_standby_test;
 10 rows selected.
 */
 
--- Step 4
--- Covert back physical standby database from snapshot standby database.
+-- Step 4 =>> (Covert back physical standby database from snapshot standby database.)
 -- Shutdown the DR database -> DR
 SQL> conn sys/P#ssw0rd@dr as sysdba
 /*
@@ -7809,8 +7854,12 @@ SQL> SELECT a.inst_id,b.status,b.instance_name,a.database_role,a.open_mode FROM 
 */
 
 
--------------------------------------------------------
---Perform Manual Switchover on Physical Standby
+----------------------------------------------------------------
+--------------Two Nodes DR Drill Senty Testing------------------
+----------------------------------------------------------------
+---------Perform Manual Switchover on Physical Standby----------
+----------------------------------------------------------------
+-- Step 1
 --Verify the switchover status on the primary database:
 [oracle@pdb1 ~]$ srvctl status database -d pdbdb -v
 /*
@@ -7818,6 +7867,7 @@ Instance pdbdb1 is running on node pdb1. Instance status: Open.
 Instance pdbdb2 is running on node pdb2. Instance status: Open.
 */
 
+-- Step 2
 --Verify the switchover status on the primary database:
 [oracle@pdbdr1 ~]$  srvctl status database -d pdbdb -v
 /*
@@ -7825,6 +7875,7 @@ Instance pdbdb1 is running on node pdbdr1. Instance status: Mounted (Closed).
 Instance pdbdb2 is running on node pdbdr2. Instance status: Mounted (Closed).
 */
 
+-- Step 3
 --Verify the switchover status on the primary database:
 [oracle@pdb1 ~]$ sqlplus / as sysdba
 /*
@@ -7888,6 +7939,7 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 4
 --Verify the switchover status on the primary database:
 [oracle@pdbdr1 ~]$  sqlplus / as sysdba
 /*
@@ -7965,6 +8017,7 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 5
 --Commit to switchover to primary with session shutdown:
 [oracle@pdb1 ~]$ sqlplus / as sysdba
 /*
@@ -7993,19 +8046,28 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 6
+--Verify the switchover status on the primary database:
 [oracle@pdb1 ~]$ srvctl status database -d pdbdb -v
 /*
 Instance pdbdb1 is not running on node pdb1
 Instance pdbdb2 is not running on node pdb2
 */
 
+-- Step 7
+--Start the switchover primary database:
 [oracle@pdb1 ~]$ srvctl start database -d pdbdb -o mount
+
+-- Step 8
+--Verify the switchover status of old primary database:
 [oracle@pdb1 ~]$ srvctl status database -d pdbdb -v
 /*
 Instance pdbdb1 is running on node pdb1. Instance status: Mounted (Closed).
 Instance pdbdb2 is running on node pdb2. Instance status: Mounted (Closed).
 */
 
+-- Step 9
+--Verify the switchover status of old primary database:
 [oracle@pdb1 ~]$ sqlplus / as sysdba
 /*
 SQL*Plus: Release 19.0.0.0.0 - Production on Sun Jun 2 11:50:27 2024
@@ -8036,6 +8098,7 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 10
 --Commit to switchover to primary with session shutdown:
 [oracle@pdbdr1 ~]$  sqlplus / as sysdba
 /*
@@ -8077,12 +8140,16 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 11
+-- Verify the DB services status of Old Secondary Database
 [oracle@pdbdr1 ~]$  srvctl status database -d pdbdb -v
 /*
 Instance pdbdb1 is running on node pdbdr1. Instance status: Mounted (Closed).
 Instance pdbdb2 is running on node pdbdr2. Instance status: Mounted (Closed).
 */
 
+-- Step 12
+-- Stop the DB services status of Old Secondary Database
 [oracle@pdbdr1 ~]$  srvctl stop database -d pdbdb
 [oracle@pdbdr1 ~]$  srvctl status database -d pdbdb -v
 /*
@@ -8090,6 +8157,8 @@ Instance pdbdb1 is not running on node pdbdr1
 Instance pdbdb2 is not running on node pdbdr2
 */
 
+-- Step 12
+-- Start the DB services status of Old Secondary Database as New Primary Database
 [oracle@pdbdr1 ~]$  srvctl start database -d pdbdb -o open
 [oracle@pdbdr1 ~]$  srvctl status database -d pdbdb -v
 /*
@@ -8097,6 +8166,8 @@ Instance pdbdb1 is running on node pdbdr1. Instance status: Open.
 Instance pdbdb2 is running on node pdbdr2. Instance status: Open.
 */
 
+-- Step 13
+-- Verify the DB status of Old Secondary Database as New Primary Database
 [oracle@pdbdr1 ~]$  sqlplus / as sysdba
 /*
 SQL*Plus: Release 19.0.0.0.0 - Production on Sun Jun 2 11:55:25 2024
@@ -8155,7 +8226,8 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
---On the new standby (initially the primary), start the MRP:
+-- Step 14
+-- On the new standby (initially the primary), start the MRP:
 [oracle@pdb1 ~]$ sqlplus / as sysdba
 /*
 SQL*Plus: Release 19.0.0.0.0 - Production on Sun Jun 2 11:55:19 2024
@@ -8283,15 +8355,15 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
--------------------
---Perform Manual SwitchBack on Physical Standby from New Primary
---Verify the SwitchBack status on the primary database:
+-- Step 15 =>> (Perform Manual SwitchBack on Physical Standby from New Primary)
+-- Verify the SwitchBack status on the primary database:
 [oracle@pdb1 ~]$ srvctl status database -d pdbdb -v
 /*
 Instance pdbdb1 is running on node pdb1. Instance status: Mounted (Closed).
 Instance pdbdb2 is running on node pdb2. Instance status: Mounted (Closed).
 */
 
+-- Step 16
 --Verify the SwitchBack status on the primary database:
 [oracle@pdbdr1 ~]$  srvctl status database -d pdbdb -v
 /*
@@ -8299,6 +8371,7 @@ Instance pdbdb1 is running on node pdbdr1. Instance status: Open.
 Instance pdbdb2 is running on node pdbdr2. Instance status: Open.
 */
 
+-- Step 17
 --Verify the SwitchBack status on the primary database:
 [oracle@pdbdr1 ~]$ sqlplus / as sysdba
 /*
@@ -8362,7 +8435,8 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
---Verify the SwitchBack status on the primary database:
+-- Step 18
+-- Verify the SwitchBack status on the primary database:
 [oracle@pdb1 ~]$  sqlplus / as sysdba
 /*
 SQL*Plus: Release 19.0.0.0.0 - Production on Sun Jun 2 12:18:57 2024
@@ -8439,6 +8513,7 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 19
 --Commit to switchover to physical standby with session shutdown
 [oracle@pdbdr1 ~]$ sqlplus / as sysdba
 /*
@@ -8467,19 +8542,28 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 20
+-- Verify the DB services and status of Old Secondary Database
 [oracle@pdbdr1 ~]$ srvctl status database -d pdbdb -v
 /*
 Instance pdbdb1 is not running on node pdbdr1
 Instance pdbdb2 is not running on node pdbdr2
 */
 
+-- Step 21
+-- Start the DB services of Secondary Database
 [oracle@pdbdr1 ~]$ srvctl start database -d pdbdb -o mount
+
+-- Step 22
+-- Verify the DB services and status of Secondary Database
 [oracle@pdbdr1 ~]$ srvctl status database -d pdbdb -v
 /*
 Instance pdbdb1 is running on node pdbdr1. Instance status: Mounted (Closed).
 Instance pdbdb2 is running on node pdbdr2. Instance status: Mounted (Closed).
 */
 
+-- Step 23
+-- Verify the DB status of Secondary Database
 [oracle@pdbdr1 ~]$ sqlplus / as sysdba
 /*
 SQL*Plus: Release 19.0.0.0.0 - Production on Sun Jun 2 12:24:00 2024
@@ -8510,6 +8594,7 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 24
 --Commit to switchover to primary with session shutdown:
 [oracle@pdb1 ~]$  sqlplus / as sysdba
 /*
@@ -8551,12 +8636,16 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
+-- Step 25
+-- Verify the DB status of New Secondary Database as Old Primary Database
 [oracle@pdb1 ~]$  srvctl status database -d pdbdb -v
 /*
 Instance pdbdb1 is running on node pdb1. Instance status: Mounted (Closed).
 Instance pdbdb2 is running on node pdb2. Instance status: Mounted (Closed).
 */
 
+-- Step 26
+-- Stop the DB services of New Secondary Database
 [oracle@pdb1 ~]$ srvctl stop database -d pdbdb
 [oracle@pdb1 ~]$ srvctl status database -d pdbdb -v
 /*
@@ -8564,6 +8653,8 @@ Instance pdbdb1 is not running on node pdb1
 Instance pdbdb2 is not running on node pdb2
 */
 
+-- Step 27
+-- Start the DB Services of New Secondary Database as Old Primary Database
 [oracle@pdb1 ~]$ srvctl start database -d pdbdb -o open
 [oracle@pdb1 ~]$ srvctl status database -d pdbdb -v
 /*
@@ -8571,6 +8662,8 @@ Instance pdbdb1 is running on node pdb1. Instance status: Open.
 Instance pdbdb2 is running on node pdb2. Instance status: Open.
 */
 
+-- Step 28
+-- Verify the DB status of Primary Database
 [oracle@pdb1 ~]$ sqlplus / as sysdba
 /*
 SQL*Plus: Release 19.0.0.0.0 - Production on Sun Jun 2 12:29:03 2024
@@ -8629,7 +8722,8 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.22.0.0.0
 */
 
---On the old standby, start the MRP:
+-- Step 29
+-- On the old standby, start the MRP:
 [oracle@pdbdr1 ~]$ sqlplus / as sysdba
 /*
 SQL*Plus: Release 19.0.0.0.0 - Production on Sun Jun 2 12:31:08 2024
