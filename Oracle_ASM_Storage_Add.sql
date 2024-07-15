@@ -119,7 +119,7 @@ col path for a60
 SELECT path,header_status,state FROM v$asm_disk;
 
 -- Now, we can add the disk to the ASM diskgroup:
-ALTER DISKGROUP DATA2 ADD DISK '/dev/oracleasm/disks/DATA_PRD2_1';
+ALTER DISKGROUP DATA2 ADD DISK '/dev/oracleasm/disks/DATA_PRD2_1' NAME DATA_PRD2_1;
 --Or--
 /*
 set lines 200;
