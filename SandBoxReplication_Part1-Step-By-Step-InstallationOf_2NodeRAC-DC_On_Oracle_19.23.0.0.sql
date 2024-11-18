@@ -4439,7 +4439,6 @@ FROM dual
 CONNECT BY LEVEL <= 900000;
 
 COMMIT;
-
 SQL> exit
 Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
 Version 19.23.0.0.0
