@@ -6289,6 +6289,5 @@ RMAN> crosscheck archivelog all;
 RMAN> delete expired archivelog all;
 RMAN> delete noprompt archivelog all;
 RMAN> exit
-
 Recovery Manager complete.
 */
