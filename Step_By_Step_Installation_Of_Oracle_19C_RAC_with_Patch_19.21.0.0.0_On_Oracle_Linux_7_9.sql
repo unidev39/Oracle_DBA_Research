@@ -3775,5 +3775,5 @@ Recovery Manager complete.
 [oracle@pdb2 ~]$ sqlplus sys/P#ssw0rd@pdbdb2 as sysdba
 
 -- Step 157 -->> On Both Nodes
--- To connnect PDB using TNS
+-- To connect PDB using TNS
 [oracle@pdb1/pdb2 ~]$ sqlplus sys/P#ssw0rd@invpdb as sysdba
