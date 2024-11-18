@@ -3553,5 +3553,5 @@ Recovery Manager complete.
 [oracle@invoice2 ~]$ sqlplus sys/P#ssw0rd@invoiced2 as sysdba
 
 -- Step 157 -->> On Both Nodes
--- To connnect PDB using TNS
+-- To connect PDB using TNS
 [oracle@invoice1/invoice2 ~]$ sqlplus sys/P#ssw0rd@invpdb as sysdba
