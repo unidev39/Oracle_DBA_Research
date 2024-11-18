@@ -4327,7 +4327,7 @@ Job "BACKUP"."SYS_IMPORT_SCHEMA_01" successfully completed at Sun Jun 2 15:15:11
 */
 
 -- Step 160.1 -->> On TARGETDB Server (Heap/Partitions tables import using Network Link)
-[oracle@pdb1 ~]$ impdp BACKUP/B8\#cKu\#P@invpdb schemas=BACKUP \
+[oracle@pdb1 ~]$ impdp  BACKUP/B8\#cKu\#P@invpdb schemas=BACKUP \
 LOGFILE=SRC_BACKUP_P.log DIRECTORY=DUMP_DIR \
 NETWORK_LINK=SRC_BACKUP_PROD PARALLEL=4 \
 include=table:\"IN \(\'TBL_BIG_ALBUM_SALES_PT_PT\' \)\" \
