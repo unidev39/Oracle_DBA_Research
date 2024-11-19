@@ -53,31 +53,6 @@ tmpfs                      tmpfs     2.0G     0  2.0G   0% /run/user/0
 192.16.6.27   pdb-scan.unidev.org.np    pdb-scan
 */
 
-/*
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-
-# Public
-192.16.6.21   pdb1.unidev.org.np        pdb1
-192.16.6.22   pdb2.unidev.org.np        pdb2
-192.16.6.28   pdb3.unidev.org.np        pdb3
-
-# Private
-10.10.10.21   pdb1-priv.unidev.org.np   pdb1-priv
-10.10.10.22   pdb2-priv.unidev.org.np   pdb2-priv
-10.10.10.28   pdb3-priv.unidev.org.np   pdb3-priv
-
-# Virtual
-192.16.6.23   pdb1-vip.unidev.org.np    pdb1-vip
-192.16.6.24   pdb2-vip.unidev.org.np    pdb2-vip
-192.16.6.29   pdb3-vip.unidev.org.np    pdb3-vip
-
-# SCAN
-192.16.6.25   pdb-scan.unidev.org.np    pdb-scan
-192.16.6.26   pdb-scan.unidev.org.np    pdb-scan
-192.16.6.27   pdb-scan.unidev.org.np    pdb-scan
-*/
-
 -- Step 2 -->> On both Node
 -- Disable secure linux by editing the "/etc/selinux/config" file, making sure the SELINUX flag is set as follows.
 [root@pdb1/pdb2 ~]# vi /etc/selinux/config
