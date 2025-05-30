@@ -5182,6 +5182,7 @@ Disconnected from Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Pr
 Version 19.27.0.0.0
 */
 
+
 -- Step 20 -->> On Both Node
 [grid@pdb1/pdb2 ~]$ asmcmd -p
 /*
