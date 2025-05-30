@@ -9724,7 +9724,6 @@ ERROR
 -----------------------------------------------------------------
 
 SQL> SELECT * FROM gv$archive_gap;
-
 no rows selected
 
 SQL> exit
