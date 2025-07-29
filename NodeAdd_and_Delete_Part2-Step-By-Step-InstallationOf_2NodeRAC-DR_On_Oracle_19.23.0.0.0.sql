@@ -3,7 +3,8 @@
 ----------------------------------------------------------------
 -- Step 0 -->> 2 Node rac on VM -->> On both Node
 --For OS Oracle Linux 8.6 => boot V1020894-01.iso
---And follow 
+--And follow
+
 --https <= public-yum.oracle.com/repo/OracleLinux/OL8/baseos/latest/x86_64/
 --UEKR6 <= https <= public-yum.oracle.com/repo/OracleLinux/OL8/UEKR6/x86_64/
 --appstream <= https <= public-yum.oracle.com/repo/OracleLinux/OL8/appstream/x86_64/
